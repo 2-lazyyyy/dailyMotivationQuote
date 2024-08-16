@@ -1,0 +1,74 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+}
+
+main {
+    padding: 2rem;
+}
+
+footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Quote block styles */
+#quote blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #4CAF50;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    font-style: italic;
+}
+
+#quote p {
+    margin: 0;
+}
+
+#quote p:first-of-type {
+    margin-bottom: 0.5rem;
+}
+
+/* Form styles */
+#score-form, #login-form, #register-form {
+    margin-top: 2rem;
+}
+
+form label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+}
+
+form input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+form button {
+    padding: 0.7rem 1.5rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
