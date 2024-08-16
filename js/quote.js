@@ -4,18 +4,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchResults = document.getElementById('searchResults');
     let currentQuoteIndex = null;
 
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+
     function loadQuote(index) {
         fetch(`/app/get_quote.php?index=${index}`)
             .then(response => response.text())
             .then(data => {
-                quoteElement.innerHTML = data;
+                quoteElement.innerHTML = data+(index+1)+'th quote <br/>'+dayOfYear+'th day';
                 currentQuoteIndex = index;
             });
     }
 
     // Initial load
-    const dayOfYear = (new Date()).getDay() + 1;
-    loadQuote(dayOfYear);
+    
+    loadQuote((dayOfYear - 1) % 119);
 
     document.getElementById('nextQuote').addEventListener('click', () => {
         if (currentQuoteIndex !== null) {
