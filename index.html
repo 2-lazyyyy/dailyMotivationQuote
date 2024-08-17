@@ -10,11 +10,11 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to the Well-being Support Site</h1>
+        <div id="header">loading...</div>
         <nav>
             <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-            <a href="profile.php">Profile</a>
+            <a href="signup.html">Register</a>
+            <a href="../app/dashboard.php">Dashboard</a>
         </nav>
     </header>
     <main>
@@ -30,6 +30,31 @@
     <footer>
         <p>&copy; 2024 Well-being Support</p>
     </footer>
+
+    <script>
+        // Fetch username dynamically
+        fetch('/api/fetch_username.php')
+            .then(response => response.json())
+            .then(data => {
+                const header = document.getElementById('header');
+                if (data.loggedIn) {
+                    header.innerHTML = `<h1>Welcome, ${data.username}</h1><button id="logoutButton">Logout</button>`;
+                    
+                    document.getElementById('logoutButton').addEventListener('click', function() {
+                        fetch('/api/logout.php', { method: 'POST' })
+                            .then(response => response.text())
+                            .then(data => {
+                                if (data === 'Logout successful') {
+                                    window.location.href = 'index.html';
+                                }
+                            });
+                    });
+                } else {
+                    
+                    header.innerHTML = `<h1>Please Login</h1>`;
+                }
+            });
+    </script>
     
 </body>
 </html>
