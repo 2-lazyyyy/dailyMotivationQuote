@@ -6,16 +6,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $pdo->prepare("SELECT id, password FROM user WHERE username = :username");
-    $stmt->bindParam(':username', $username);
+    // Prepare the SQL statement using mysqli
+    $stmt = $mysqli->prepare("SELECT id, password FROM user WHERE username = ?");
+    $stmt->bind_param('s', $username);
     $stmt->execute();
+    $stmt->store_result();
 
-    if ($stmt->rowCount() > 0) {
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['user_id'] = $row['id'];
+    if ($stmt->num_rows > 0) {
+        // Bind the result to variables
+        $stmt->bind_result($id, $hashed_password);
+        $stmt->fetch();
+
+        if (password_verify($password, $hashed_password)) {
+            $_SESSION['user_id'] = $id;
             $_SESSION['username'] = $username;
-            
+
             echo json_encode(['status' => 'success', 'message' => 'Login successful']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid password']);
@@ -23,5 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo json_encode(['status' => 'error', 'message' => 'No user found']);
     }
+
+    $stmt->close();
 }
 ?>

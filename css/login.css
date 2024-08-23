@@ -1,0 +1,29 @@
+body{
+    background: url('./../img/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.card-body{
+    background-color: #e4fde0;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group .fa-eye, .form-group .fa-eye-slash {
+    position: absolute;
+    right: 15px;
+    top: 70%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1;
+}

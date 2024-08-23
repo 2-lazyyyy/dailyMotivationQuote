@@ -12,41 +12,37 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="./js/dashboard.js"></script>
-    <script src="./js/quote.js"></script>
+    <script src="./js/dashboard.js" defer></script>
+    <script src="./js/quote.js" defer></script>
     <link href="./css/dashboard.css" rel="stylesheet"/>
-    <style>
-        
-    </style>
-
-    <script type="text/javascript">
-        
-    </script>
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-lg navbar-light" role="navigation">
             <div class="container">
-              <a class="navbar-brand" href="#">&#127795;</a>
+              <a class="navbar-brand" href="#" aria-label="Home">&#127795;</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="./index.html">Home</a>
+                    <a class="nav-link" href="./index.html" role="link">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active dashboard" aria-current="page" href="#">Dashboard</a>
+                    <a class="nav-link active" href="#" role="link">Dashboard</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link register" id="logoutButton" aria-current="page " href="#">Logout</a>
+                    <a class="nav-link" id="logoutButton" href="#" role="link">Logout</a>
                   </li>
                 </ul>
-                <form id="searchForm" class="d-flex">
+                <form id="searchForm" class="d-flex" role="search">
+                  <label for="searchInput" class="visually-hidden">Search</label>
                   <input id="searchInput" class="form-control me-2" type="search" autocomplete="off" placeholder="Search" aria-label="Search">
-                  <button class="btn" type="submit" style="border: none!important; outline:none!important;"><img style="opacity: 0.6" src="./img/SearchIcon.svg" ></button>
+                  <button class="btn" type="submit" style="border: none!important; outline:none!important;">
+                    <img style="opacity: 0.6" src="./img/SearchIcon.svg" alt="Search icon">
+                  </button>
               </form>
               </div>
             </div>
@@ -62,7 +58,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <ul id="resultList" class="result-list">
+            <ul id="resultList" class="result-list" role="list">
                 <!-- Search results will be populated here -->
             </ul>
             </div>
@@ -73,26 +69,23 @@
         </div>
     </div>
 
-    <!-- <div  class=" bannerdiv position-relative z-index-3">
-        <div class="container "><span class="welcomemsg">Welcome to Dashboard</span></div>
-    </div> -->
-
     <main>
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <form id="scoreForm" class="mb-4">
+                    <form id="scoreForm" class="mb-4" aria-labelledby="scoreFormTitle">
+                        <h2 id="scoreFormTitle">Record Your Wellbeing Scores</h2>
                         <div class="mb-3">
                             <label for="happiness" class="form-label">Happiness (1.0-5.0):</label>
-                            <input type="text" class="form-control" id="happiness" name="happiness" required>
+                            <input type="number" class="form-control" id="happiness" name="happiness" min="1.0" max="5.0" step="0.1" required aria-required="true">
                         </div>
                         <div class="mb-3">
                             <label for="workload" class="form-label">Workload Management (1.0-5.0):</label>
-                            <input type="text" class="form-control" id="workload" name="workload" required>
+                            <input type="number" class="form-control" id="workload" name="workload" min="1.0" max="5.0" step="0.1" required aria-required="true">
                         </div>
                         <div class="mb-3">
                             <label for="anxiety" class="form-label">Anxiety Level (1.0-5.0):</label>
-                            <input type="text" class="form-control" id="anxiety" name="anxiety" required>
+                            <input type="number" class="form-control" id="anxiety" name="anxiety" min="1.0" max="5.0" step="0.1" required aria-required="true">
                         </div>
                         <button type="submit" class="btn btn-outline-success" style="margin-top: 30px">Submit Scores</button>
                         <p id="message" class="mt-2"></p>
@@ -100,27 +93,22 @@
                 </div>
     
                 <div class="col-md-6">
+                    <div class="d-flex justify-content-between">
+                        <h2 id="scoreFormTitle">Your Recent Scores</h2>
+                        <h2 id="scoreFormTitle">Last Updated on <em class="date"></em></h2>
+                    </div>
                     <div class="score-card">
                         <div class="recentTitle">
                             <div class="titleBox" id="titleBox1">
                                 <h3 class="title" id="title1">Category</h3>
                             </div>
-                            <!-- <h5 class="">Last Updated On <em class="date"></em> </h5> -->
                             <div class="titleBox" id="titleBox2">
                                 <h3 class="title" id="title2">Scores</h3>
                             </div>
                         </div>
-                        <div id="scoresTable">
-
-                            
+                        <div id="scoresTable" role="table">
+                            <!-- Scores will be dynamically inserted here -->
                         </div>
-                        
-                        
-                        <!-- <table id="scoresTable" class="table table-borderless">
-                            <tbody>
-                               
-                             </tbody>
-                        </table>  -->
                     </div>
     
                     <div id="adviceSection" class="mt-4">
@@ -129,10 +117,8 @@
                 </div>
             </div>
         </div>
-        <div id="curve_chart" class="chart-container" style="width: 100%; height: 500px;"></div>
-        
+        <div id="curve_chart" class="chart-container" style="width: 100%; height: 500px;" role="img" aria-label="Line chart displaying wellbeing scores over time"></div>
     </main>
-    
 
     <footer>
         &copy; 2024 Wellbeing Dashboard. All rights reserved.

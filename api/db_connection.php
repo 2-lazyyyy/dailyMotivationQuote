@@ -1,12 +1,19 @@
 <?php
-$dsn = 'mysql:host=localhost;dbname=wellbeing_db;charset=utf8';
+$host = 'localhost';
+$dbname = 'wellbeing_db';
 $username = 'root';
 $password = 'root';
 
-try {
-    $pdo = new PDO($dsn, $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die('Database connection failed: ' . $e->getMessage());
+// Create connection
+$mysqli = new mysqli($host, $username, $password, $dbname);
+
+// Check connection
+if ($mysqli->connect_error) {
+    die('Database connection failed: ' . $mysqli->connect_error);
+}
+
+// Set charset
+if (!$mysqli->set_charset('utf8')) {
+    die('Error loading character set utf8: ' . $mysqli->error);
 }
 ?>

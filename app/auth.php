@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-// Function to check if the user is logged in
-function checkSession() {
-    if (!isset($_SESSION['user_id'])) {
-        // If no session is found, redirect to index.html
-        header('Location: ./../index.html');
-        exit();
-    }
+header('Content-Type: application/json');
+
+// Check if the user is logged in
+if (isset($_SESSION['user_id'])) {
+    echo json_encode(['status' => 'ok']);
+} else {
+    echo json_encode(['status' => 'expired']);
 }
 ?>

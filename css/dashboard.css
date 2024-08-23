@@ -107,6 +107,13 @@ main {
     /* background: linear-gradient(to right, #91CF8E 61%, #e4fde0 39.3%); */
 }
 
+#scoreFormTitle{
+    color: #000000a1;
+    font-size: 20px;
+    margin-bottom: 20px!important;
+    /* text-align: center; */
+}
+
 
 
 .exp2{
@@ -204,4 +211,8 @@ footer {
 
 }
 
-.scoreBox{}
+@media only screen and (max-width: 768px){
+    #scoreFormTitle{
+        font-size: 16px;
+    }
+}

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Fetch user scores and display chart and advice on page load
     fetchScores();
+    checkSession();
 
     $('#logoutButton').off('click').on('click', function(e) {
         e.preventDefault(); // Prevent default link behavior
@@ -10,6 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    const checkSession = async () => {
+        try {
+            const response = await fetch('/api/check_session.php');
+            const data = await response.json();
+            
+            if (data.status === 'expired') {
+                window.location.href = '/index.html';
+            }
+        } catch (error) {
+            console.error('Error checking session:', error);
+        }
+    };
 
     // Handle form submission via Fetch API
     $("#scoreForm").submit(async function (event) {

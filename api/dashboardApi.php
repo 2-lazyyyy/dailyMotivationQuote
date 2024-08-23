@@ -2,8 +2,6 @@
 // Database connection
 require_once 'db_connection.php';
 
-require './../app/auth.php'; // Ensure the user is logged in
-checkSession();
 
 date_default_timezone_set('Asia/Yangon');
 
@@ -40,18 +38,25 @@ if ($method === 'POST') {
             }
 
             // Check if the user has already submitted scores for today
-            $stmt = $pdo->prepare("SELECT id FROM wellbeing_scores WHERE user_id = :user_id AND date = :date");
-            $stmt->execute(['user_id' => $user_id, 'date' => $date]);
-            $score_exists = $stmt->fetchColumn();
+            $stmt = $mysqli->prepare("SELECT id FROM wellbeing_scores WHERE user_id = ? AND date = ?");
+            $stmt->bind_param('is', $user_id, $date);
+            $stmt->execute();
+            $stmt->bind_result($score_exists);
+            $stmt->fetch();
+            $stmt->close();
 
             if ($score_exists) {
                 // Update existing scores for today
-                $stmt = $pdo->prepare("UPDATE wellbeing_scores SET happiness = :happiness, workload = :workload, anxiety = :anxiety WHERE user_id = :user_id AND date = :date");
-                $stmt->execute(['happiness' => $happiness, 'workload' => $workload, 'anxiety' => $anxiety, 'user_id' => $user_id, 'date' => $date]);
+                $stmt = $mysqli->prepare("UPDATE wellbeing_scores SET happiness = ?, workload = ?, anxiety = ? WHERE user_id = ? AND date = ?");
+                $stmt->bind_param('ddiis', $happiness, $workload, $anxiety, $user_id, $date);
+                $stmt->execute();
+                $stmt->close();
             } else {
                 // Insert new scores
-                $stmt = $pdo->prepare("INSERT INTO wellbeing_scores (user_id, date, happiness, workload, anxiety) VALUES (:user_id, :date, :happiness, :workload, :anxiety)");
-                $stmt->execute(['user_id' => $user_id, 'date' => $date, 'happiness' => $happiness, 'workload' => $workload, 'anxiety' => $anxiety]);
+                $stmt = $mysqli->prepare("INSERT INTO wellbeing_scores (user_id, date, happiness, workload, anxiety) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param('issdd', $user_id, $date, $happiness, $workload, $anxiety);
+                $stmt->execute();
+                $stmt->close();
             }
 
             echo json_encode(['success' => true, 'message' => 'Scores submitted successfully!']);
@@ -67,18 +72,25 @@ if ($method === 'POST') {
     $user_id = $_SESSION['user_id'];
 
     // Fetch the most recent score for the user
-    $stmt = $pdo->prepare("SELECT date, happiness, workload, anxiety FROM wellbeing_scores WHERE user_id = :user_id ORDER BY date DESC LIMIT 1");
-    $stmt->execute(['user_id' => $user_id]);
-    $recent_score = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $mysqli->prepare("SELECT date, happiness, workload, anxiety FROM wellbeing_scores WHERE user_id = ? ORDER BY date DESC LIMIT 1");
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $stmt->bind_result($date, $happiness, $workload, $anxiety);
+    $stmt->fetch();
+    $recent_score = ['date' => $date, 'happiness' => $happiness, 'workload' => $workload, 'anxiety' => $anxiety];
+    $stmt->close();
 
     // Fetch scores from the database for chart
-    $stmt = $pdo->prepare("SELECT date, happiness, workload, anxiety FROM wellbeing_scores WHERE user_id = :user_id ORDER BY date ASC");
-    $stmt->execute(['user_id' => $user_id]);
-    $scores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $mysqli->prepare("SELECT date, happiness, workload, anxiety FROM wellbeing_scores WHERE user_id = ? ORDER BY date ASC");
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $scores = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
 
     // Calculate advice based on the last 3 readings
     if (count($recent_score) >= 3) {
-        $avg = ($recent_score['happiness']+$recent_score['workload']+$recent_score['anxiety']) / 3;
+        $avg = ($recent_score['happiness'] + $recent_score['workload'] + $recent_score['anxiety']) / 3;
 
         if ($avg < 1.5) {
             $advice = "Consider seeking professional assistance if you are struggling with low scores.";

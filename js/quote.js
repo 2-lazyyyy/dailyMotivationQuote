@@ -1,10 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const quoteElement = document.getElementById('quote');
-    const authorName = document.getElementById('author');
-    const intro = document.getElementById('intro');
-    const backToday = document.querySelector('.today');
-    
-
+$(document).ready(() => {
+    const quoteElement = $('#quote');
+    const authorName = $('#author');
+    const intro = $('#intro');
+    const backToday = $('.today');
     const totalQuotes = 119; // Total number of quotes
     const oneDay = 1000 * 60 * 60 * 24; // Milliseconds in one day
 
@@ -13,17 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const startOfNextYear = new Date(now.getFullYear() + 1, 0, 0);
     const startOfPreviousYear = new Date(now.getFullYear() - 1, 0, 0);
 
-    function getDayOfYear(date) {
-        return Math.floor((date - new Date(date.getFullYear(), 0, 0)) / oneDay);
-    }
+    const getDayOfYear = (date) => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / oneDay);
 
-    function loadQuote(index, dayOfYear, year) {
+    const loadQuote = (index, dayOfYear, year) => {
         fetch(`/app/get_quote.php?index=${index}`)
             .then(response => response.json())
             .then(data => {
-                quoteElement.textContent = data.quote;
-                authorName.textContent = data.author;
-                intro.textContent = `This is ${index + 1}th quote for ${dayOfYear}th day of ${year}.`;
+                quoteElement.text(data.quote);
+                authorName.text(data.author);
+                intro.text(`This is ${index + 1}th quote for ${dayOfYear}th day of ${year}.`);
                 currentQuoteIndex = index;
             });
     }
@@ -35,15 +31,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadQuote(currentQuoteIndex, currentDayOfYear, now.getFullYear());
 
-    document.getElementById('nextQuote').addEventListener('click', () => {
+    const updateBackTodayButton = () => {
+        backToday.html('Back Today <i class="fa-solid fa-arrow-right" style="font-size: 50px; cursor: pointer"></i>');
+        backToday.addClass('back');
+        
+        backToday.on('click', () => {
+            location.reload();
+        });
+
+        backToday.on('mouseenter', () => {
+            backToday.find('i').css({
+                'transform': 'translateX(10px)',
+                'transition': 'transform .5s ease'
+            });
+        });
+
+        backToday.on('mouseleave', () => {
+            backToday.find('i').css({
+                'transform': 'translateX(0)'
+            });
+        });
+    };
+
+    $('#nextQuote').on('click', () => {
         if (currentQuoteIndex !== null) {
             currentDate = new Date(currentDate.getTime() + oneDay); // Move to the next day
             currentDayOfYear = getDayOfYear(currentDate);
 
-            // Calculate next index
             let nextIndex = (currentQuoteIndex + 1) % totalQuotes;
 
-            // Handle year transition
             if (currentDayOfYear >= Math.floor((startOfNextYear - startOfYear) / oneDay)) {
                 currentDate = startOfNextYear;
                 currentDayOfYear = getDayOfYear(currentDate);
@@ -51,90 +67,43 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             loadQuote(nextIndex, currentDayOfYear, currentDate.getFullYear());
-            backToday.textContent = 'Back Today'
-            $('.today').css({'cursor':'pointer'});
-            backToday.innerHTML +=  ' <i class="fa-solid fa-arrow-right " style="font-size: 50px; cursor: pointer"></i>'; // Add back arrow icon
-            $('.today').addClass('back')    
-            $('.back').on('click', function() {
-                // Reload the current page
-                location.reload();
-            });
-
-            $('.today').hover(function() {
-                $(this).find('i').css({
-                    'transform': 'translateX(10px)',
-                    'transition': 'transform .5s ease' // Example of a hover effect
-                });
-            }, function() {
-                $(this).find('i').css({
-                    'transform': 'translateX(0)' // Reset scale on mouse out
-                });
-            });
-
+            updateBackTodayButton();
         }
     });
 
-    document.getElementById('prevQuote').addEventListener('click', () => {
+    $('#prevQuote').on('click', () => {
         if (currentQuoteIndex !== null) {
             currentDate = new Date(currentDate.getTime() - oneDay); // Move to the previous day
             currentDayOfYear = getDayOfYear(currentDate);
 
-            // Calculate previous index
             let prevIndex = (currentQuoteIndex - 1 + totalQuotes) % totalQuotes;
 
-            // Handle year transition
             if (currentDayOfYear < 1) {
                 currentDate = startOfPreviousYear;
                 currentDayOfYear = getDayOfYear(currentDate);
-            prevIndex = totalQuotes - 1; // Go to the last quote of the previous year
+                prevIndex = totalQuotes - 1; // Go to the last quote of the previous year
+            }
+
+            loadQuote(prevIndex, currentDayOfYear, currentDate.getFullYear());
+            updateBackTodayButton();
         }
+    });
 
-        loadQuote(prevIndex, currentDayOfYear, currentDate.getFullYear());
-        backToday.textContent = 'Back Today'
-        $('.today').addClass('back')    
-        $('.today').css({'cursor':'pointer'});
-        backToday.innerHTML +=  ' <i class="fa-solid fa-arrow-right"></i>'; // Add back arrow icon
-
-        $('.back').on('click', function() {
-            // Reload the current page
-            location.reload();
-        });
-
-        $('.today').hover(function() {
-            $(this).find('i').css({
-                'transform': 'translateX(10px)',
-                'transition': 'transform .5s ease' // Example of a hover effect
-            });
-        }, function() {
-            $(this).find('i').css({
-                'transform': 'translateX(0)' // Reset scale on mouse out
-            });
-        });
-
-    }
-});
-
-   
-});
-
-$(document).ready(function() {
-    $('#searchForm').on('submit', function(event) {
+    $('#searchForm').on('submit', (event) => {
         event.preventDefault(); // Prevent the default form submission
-        const searchInput = $('#searchInput');
-        const query = searchInput.val().trim();
-        
+        const query = $('#searchInput').val().trim();
+
         if (query) {
             fetch(`./../app/search_quotes.php?query=${encodeURIComponent(query)}`)
                 .then(response => response.json())
                 .then(data => {
-                    
                     const resultList = $('#resultList');
                     resultList.empty(); // Clear previous results
 
                     if (data && data.length > 0) {
                         data.forEach(result => {
                             resultList.append(`<li class="result-item">${result.quote} <em style="display: block;">- ${result.author}</em></li>`);
-                        })
+                        });
                     } else {
                         resultList.append('<li class="result-item">No results found.</li>');
                     }
@@ -145,7 +114,7 @@ $(document).ready(function() {
                 });
 
             // Show the modal
-            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            const myModal = new bootstrap.Modal($('#exampleModal'));
             myModal.show();
         }
     });

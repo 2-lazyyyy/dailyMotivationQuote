@@ -29,7 +29,7 @@ $(document).ready(function() {
             $dashboard.parent('li').removeClass('nav-item');
             $header.text('Please Log in');
             $login.text('Login').attr('href', '/login.html').removeClass('hidden');
-            $register.text('Register').attr('href', '/register.html').removeClass('hidden');
+            $register.text('Register').attr('href', '/signup.html').removeClass('hidden');
             $dashboard.add($logoutButton).addClass('hidden');
         }
     });
