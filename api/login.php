@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $pdo->prepare("SELECT id, password FROM users WHERE username = :username");
+    $stmt = $pdo->prepare("SELECT id, password FROM user WHERE username = :username");
     $stmt->bindParam(':username', $username);
     $stmt->execute();
 

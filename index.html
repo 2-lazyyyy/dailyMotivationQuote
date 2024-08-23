@@ -4,57 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="css/styles.css">
-    
+    <!-- Bootstrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Raleway font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Jersey 10 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"  />
     <script src="js/quote.js" defer></script>
+    <link href="./css/styles.css" rel="stylesheet" />
+    <link href="./css/quote.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <div id="header">loading...</div>
-        <nav>
-            <a href="login.html">Login</a>
-            <a href="signup.html">Register</a>
-            <a href="../app/dashboard.php">Dashboard</a>
-        </nav>
-    </header>
-    <main>
-        <section id="quote">
-            <!-- Daily quote will be injected here -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">&#127795;</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link dashboard" aria-current="page" href="#">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link login" href="" aria-current="page" >Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link register" aria-current="page " href="#">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link register" id="logoutButton" aria-current="page " href="#">Logout</a>
+          </li>
+        </ul>
+        <form id="searchForm" class="d-flex">
+          <input id="searchInput" class="form-control me-2" type="search" autocomplete="off" placeholder="Search" aria-label="Search">
+          <button class="btn" type="submit" style="border: none!important; outline:none!important;"><img style="opacity: 0.6" src="./img/SearchIcon.svg" ></button>
+      </form>
+      </div>
+    </div>
+  </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Search Results</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul id="resultList" class="result-list">
+          <!-- Search results will be populated here -->
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <main class="position-relative">
+        <!-- <section id="quote">
+          
+            
         </section>
         <button id="prevQuote">Previous Quote</button>
         <button id="nextQuote">Next Quote</button>
         <input type="text" id="searchInput" placeholder="Search quotes...">
         <button id="searchQuote">Search</button>
-        <div id="searchResults"></div>
+        <div id="searchResults"></div> -->
+        
+        <div class="welcome">
+          <p class="msg">Welcome, </p>
+        </div>
+        <div class="container position-relative">
+          
+          <div class="d-flex justify-content-between align-items-center insidecontainer">
+            <div class="d-flex justify-content-center align-items-start flex-column introDiv">
+              <p class="today">Today's Quote</p>
+              <p id="intro"></p>
+            </div>
+            <div class="quotediv position-relative d-flex align-items-center justify-content-center">
+              <div class="position-absolute quotesvgdiv1">
+                <img src="./img/quote.svg" alt=""  />
+              </div>
+              <div class="position-relative">
+                <blockquote>
+                  <p id="quote"></p>
+                  <p id="author"></p>
+                </blockquote>
+                
+              </div>
+              <div class="position-absolute quotesvgdiv2">
+                <img src="./img/quote.svg" alt=""  />
+              </div>
+              <i class="fa-solid fa-chevron-down" id="prevQuote"></i>
+              <i class="fa-solid fa-chevron-down" id="nextQuote"></i>
+            </div>
+          </div>
+        </div>
     </main>
-    <footer>
+    <!-- <footer>
         <p>&copy; 2024 Well-being Support</p>
-    </footer>
+    </footer> -->
 
-    <script>
-        // Fetch username dynamically
-        fetch('/api/fetch_username.php')
-            .then(response => response.json())
-            .then(data => {
-                const header = document.getElementById('header');
-                if (data.loggedIn) {
-                    header.innerHTML = `<h1>Welcome, ${data.username}</h1><button id="logoutButton">Logout</button>`;
-                    
-                    document.getElementById('logoutButton').addEventListener('click', function() {
-                        fetch('/api/logout.php', { method: 'POST' })
-                            .then(response => response.text())
-                            .then(data => {
-                                if (data === 'Logout successful') {
-                                    window.location.href = 'index.html';
-                                }
-                            });
-                    });
-                } else {
-                    
-                    header.innerHTML = `<h1>Please Login</h1>`;
-                }
-            });
-    </script>
+    
+    <script src="./js/home.js"></script>
+    
+
     
 </body>
 </html>

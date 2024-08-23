@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellbeing Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./js/dashboard.js"></script>
+    <script src="./js/quote.js"></script>
+    <link href="./css/dashboard.css" rel="stylesheet"/>
+    <style>
+        
+    </style>
+
+    <script type="text/javascript">
+        
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+              <a class="navbar-brand" href="#">&#127795;</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="./index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active dashboard" aria-current="page" href="#">Dashboard</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link register" id="logoutButton" aria-current="page " href="#">Logout</a>
+                  </li>
+                </ul>
+                <form id="searchForm" class="d-flex">
+                  <input id="searchInput" class="form-control me-2" type="search" autocomplete="off" placeholder="Search" aria-label="Search">
+                  <button class="btn" type="submit" style="border: none!important; outline:none!important;"><img style="opacity: 0.6" src="./img/SearchIcon.svg" ></button>
+              </form>
+              </div>
+            </div>
+          </nav>
+    </header>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Search Results</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <ul id="resultList" class="result-list">
+                <!-- Search results will be populated here -->
+            </ul>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- <div  class=" bannerdiv position-relative z-index-3">
+        <div class="container "><span class="welcomemsg">Welcome to Dashboard</span></div>
+    </div> -->
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <form id="scoreForm" class="mb-4">
+                        <div class="mb-3">
+                            <label for="happiness" class="form-label">Happiness (1.0-5.0):</label>
+                            <input type="text" class="form-control" id="happiness" name="happiness" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="workload" class="form-label">Workload Management (1.0-5.0):</label>
+                            <input type="text" class="form-control" id="workload" name="workload" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="anxiety" class="form-label">Anxiety Level (1.0-5.0):</label>
+                            <input type="text" class="form-control" id="anxiety" name="anxiety" required>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success" style="margin-top: 30px">Submit Scores</button>
+                        <p id="message" class="mt-2"></p>
+                    </form>
+                </div>
+    
+                <div class="col-md-6">
+                    <div class="score-card">
+                        <div class="recentTitle">
+                            <div class="titleBox" id="titleBox1">
+                                <h3 class="title" id="title1">Category</h3>
+                            </div>
+                            <!-- <h5 class="">Last Updated On <em class="date"></em> </h5> -->
+                            <div class="titleBox" id="titleBox2">
+                                <h3 class="title" id="title2">Scores</h3>
+                            </div>
+                        </div>
+                        <div id="scoresTable">
+
+                            
+                        </div>
+                        
+                        
+                        <!-- <table id="scoresTable" class="table table-borderless">
+                            <tbody>
+                               
+                             </tbody>
+                        </table>  -->
+                    </div>
+    
+                    <div id="adviceSection" class="mt-4">
+                        <!-- Advice will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="curve_chart" class="chart-container" style="width: 100%; height: 500px;"></div>
+        
+    </main>
+    
+
+    <footer>
+        &copy; 2024 Wellbeing Dashboard. All rights reserved.
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
