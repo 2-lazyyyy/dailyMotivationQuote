@@ -95,7 +95,7 @@ if ($method === 'POST') {
         $avg = ($recent_score['happiness'] + $recent_score['workload'] + $recent_score['anxiety']) / 3;
 
         if ($avg < 1.5) {
-            $advice = $recent_score['anxiety'];
+            $advice = "Consider to seek professional assistance because your scores are lower.";
             $status = "lower";
         } else {
             $advice = "Your well-being scores are looking good. Keep up the positive habits!";
