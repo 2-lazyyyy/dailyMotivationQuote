@@ -1,20 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Fetch user scores and display chart and advice on page load
-    fetchScores();
-    checkSession();
-
-    $('#logoutButton').off('click').on('click', function(e) {
-        e.preventDefault(); // Prevent default link behavior
-        $.post('/app/logout.php', function(response) {
-            if (response === 'Logout successful') {
-                window.location.href = 'index.html';
-            }
-        });
-    });
-
+    // Define the checkSession function before calling it
     const checkSession = async () => {
         try {
             const response = await fetch('/api/check_session.php');
+            if (!response.ok) throw new Error('Network response was not ok');
+
             const data = await response.json();
             
             if (data.status === 'expired') {
@@ -24,6 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error checking session:', error);
         }
     };
+
+    // Fetch user scores and display chart and advice on page load
+    fetchScores();
+    checkSession();
+
+    $('#logoutButton').off('click').on('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior
+        $.post('/app/logout.php', function(response) {
+            if (response === 'Logout successful') {
+                window.location.href = '/index.html';
+            }
+        });
+    });
 
     // Handle form submission via Fetch API
     $("#scoreForm").submit(async function (event) {
@@ -44,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify(data)
             });
+
+            if (!response.ok) throw new Error('Network response was not ok');
 
             const result = await response.json();
 
@@ -70,52 +75,49 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchScores() {
         try {
             const response = await fetch('./api/dashboardApi.php');
+            if (!response.ok) throw new Error('Network response was not ok');
+
             const data = await response.json();
 
             // Update the scores table
             const scoresTableBody = document.getElementById('scoresTable');
             if (data.recent_score) {
-                scoresTableBody.innerHTML =
-                    `       <div class="scores">
-                                <h3 class="exp1 w-50">Hapiness</h3>
-                                <h3 class="exp2 w-50">${data.recent_score.happiness}</h3>
-                            </div>
-                            <div class="scores">
-                                <h3 class="exp1 w-50">Workload Management</h3>
-                                <h3 class="exp2 w-50">${data.recent_score.workload}</h3>
-                            </div>
-                            <div class="scores">
-                                <h3 class="exp1 w-50">Anxiety</h3>
-                                <h3 class="exp2 w-50">${data.recent_score.anxiety}</h3>
-                            </div>
-                    `;
+                scoresTableBody.innerHTML = `
+                    <div class="scores">
+                        <h3 class="exp1 w-50">Happiness</h3>
+                        <h3 class="exp2 w-50">${data.recent_score.happiness}</h3>
+                    </div>
+                    <div class="scores">
+                        <h3 class="exp1 w-50">Workload Management</h3>
+                        <h3 class="exp2 w-50">${data.recent_score.workload}</h3>
+                    </div>
+                    <div class="scores">
+                        <h3 class="exp1 w-50">Anxiety</h3>
+                        <h3 class="exp2 w-50">${data.recent_score.anxiety}</h3>
+                    </div>
+                `;
 
-                $('.date').text(data.recent_score.date)
-
-                
-                
+                $('.date').text(data.recent_score.date);
             }
 
             // Update the advice section
             const adviceSection = document.getElementById('adviceSection');
-            if (data.advice && data.status == 'good') {
-                adviceSection.innerHTML =
-                    `<div class="adviceGood d-flex align-items-center">
+            if (data.advice) {
+                let adviceClass = '';
+                if (data.status === 'good') {
+                    adviceClass = 'adviceGood';
+                } else if (data.status === 'lower') {
+                    adviceClass = 'adviceLower';
+                } else {
+                    adviceClass = 'advice';
+                }
+
+                adviceSection.innerHTML = `
+                    <div class="${adviceClass} d-flex align-items-center">
                         <span class="alert-icon">&#9432;</span>
                         <div>${data.advice}</div>
-                    </div>`;
-            } else if (data.advice && data.status == 'lower') {
-                adviceSection.innerHTML =
-                    `<div class="adviceLower d-flex align-items-center">
-                        <span class="alert-icon">&#9432;</span>
-                        <div>${data.advice}</div>
-                    </div>`;
-            } else {
-                adviceSection.innerHTML =
-                    `<div class="advice d-flex align-items-center">
-                        <span class="alert-icon">&#9432;</span>
-                        <div>${data.advice}</div>
-                    </div>`;
+                    </div>
+                `;
             }
 
             // Draw the chart
@@ -156,10 +158,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
             $("rect").attr("fill", "#e4fde0");
         });
-
-        
     }
-
-
 });
-

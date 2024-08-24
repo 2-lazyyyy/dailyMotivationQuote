@@ -19,6 +19,8 @@ if ($method === 'POST') {
         $workload = isset($data['workload']) ? floatval($data['workload']) : null;
         $anxiety = isset($data['anxiety']) ? floatval($data['anxiety']) : null;
 
+        
+
         // Check if all required data is present
         if ($happiness !== null && $workload !== null && $anxiety !== null) {
             // Handle form submission as before
@@ -48,13 +50,13 @@ if ($method === 'POST') {
             if ($score_exists) {
                 // Update existing scores for today
                 $stmt = $mysqli->prepare("UPDATE wellbeing_scores SET happiness = ?, workload = ?, anxiety = ? WHERE user_id = ? AND date = ?");
-                $stmt->bind_param('ddiis', $happiness, $workload, $anxiety, $user_id, $date);
+                $stmt->bind_param('dddis', $happiness, $workload, $anxiety, $user_id, $date);
                 $stmt->execute();
                 $stmt->close();
             } else {
                 // Insert new scores
                 $stmt = $mysqli->prepare("INSERT INTO wellbeing_scores (user_id, date, happiness, workload, anxiety) VALUES (?, ?, ?, ?, ?)");
-                $stmt->bind_param('issdd', $user_id, $date, $happiness, $workload, $anxiety);
+                $stmt->bind_param('isddd', $user_id, $date, $happiness, $workload, $anxiety);
                 $stmt->execute();
                 $stmt->close();
             }
@@ -93,7 +95,7 @@ if ($method === 'POST') {
         $avg = ($recent_score['happiness'] + $recent_score['workload'] + $recent_score['anxiety']) / 3;
 
         if ($avg < 1.5) {
-            $advice = "Consider seeking professional assistance if you are struggling with low scores.";
+            $advice = $recent_score['anxiety'];
             $status = "lower";
         } else {
             $advice = "Your well-being scores are looking good. Keep up the positive habits!";
