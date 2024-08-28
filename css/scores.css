@@ -1,0 +1,249 @@
+body {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    background: url('./../img/bg2.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      /* height: 100vh; */
+      /* overflow: hidden; */
+  }
+  
+  nav{
+      background: transparent;
+      backdrop-filter: blur(30px);
+      box-shadow: 0 2px 3px #00000044;
+  }
+  
+  .hidden{
+      display: none;
+  }
+  
+  
+  .text-success{
+    color: rgb(5, 236, 5)!important;
+  }
+  
+  .nav-item{
+      padding-left: 20px;
+      padding-right: 20px;
+  }
+  
+  .nav-link{
+      font-size: 20px!important;
+      color: #fff!important;
+  }
+  
+  .navbar-brand{
+      font-size: 40px;
+  }
+  
+  .nav-link.active{
+      font-weight: 500;
+      border-bottom: 2px solid orange;
+  }
+  
+  .form-control{
+      background: #abbaab!important;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #ffffff, #abbaab)!important;  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #ffffff, #abbaab)!important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  
+  .navbar-toggler-icon{
+      background-image: url('./../img/menuicon.svg')!important;
+  }
+  
+  .result-list {
+      list-style-type: none;
+      padding: 0;
+  }
+  .result-list li{
+      padding: 10px;
+      border-bottom: 1px solid #ddd;  
+  }
+  .result-list li:last-child {
+      border-bottom: none;
+  }
+  .result-item {
+      font-size: 500;
+      font-size: 1.1rem;
+      color: #000;
+  }
+  .result-item em{
+      font-weight: bold;
+  }
+  
+  .modal-content{
+      background: #abbaab;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to left,  #abbaab,#e4fde0);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to left, #abbaab,#e4fde0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
+  }
+
+  span.msg{
+    padding-right: 20px;
+    font-size: 30px;
+    color: #E4FDE0;
+    font-weight: 500;
+    
+}
+
+main {
+    /* margin: 2rem auto; */
+    /* max-width: 900px; */
+    padding: 1.5rem 0;
+    
+    
+}
+
+.form-label {
+    font-weight: bold;
+    color: #e4fde0;
+
+}
+
+#curve_chart {
+    margin-top: 2rem;
+}
+
+
+.score-card {
+    background: linear-gradient(to right, rgba(255,165,0,0.6) , rgba(89, 0, 255, 0.6) );
+    padding: 1.2rem;
+    padding-top: 30px;
+    border-radius: 0.5rem;
+    /* border: 1px solid rgba(0,0,0,0.2); */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+
+ .exp1{ 
+    font-weight: 600;
+    color: #e4fde0;
+    font-size: 1.25rem;
+    text-align: center;
+    /* background: linear-gradient(to right, #91CF8E 61%, #e4fde0 39.3%); */
+}
+
+
+
+.scoreFormTitle{
+    color: orange;
+    font-size: 20px;
+    font-family: 'matemasie',sans-serif;
+    margin-bottom: 50px!important;
+    text-align: center;
+}
+
+
+
+.exp2{
+    font-size: 1.25rem;
+    font-weight: 500;
+    /* background: #e4fde0; */
+    color: #e4fde0;
+    text-align: center;
+}
+
+.alert-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.adviceGood{
+    background: rgba(89, 0, 255, 0.5);
+    padding: 20px 10px;
+    border-radius: 10px;
+    color: #e4fde0;
+    font-weight: 500;
+    
+}
+
+.adviceLower{
+    background: rgba(255,165,0,0.6);
+    padding: 20px 10px;
+    border-radius: 10px;
+    width: 100%;
+    color: #e4fde0;
+    font-weight: 500;
+}
+
+.advice{
+    background-color: #fc2b1c41;
+    padding: 20px 10px;
+    border-radius: 10px;
+
+}
+
+.chart-container {
+    margin-top: 3rem;
+}
+
+.recentTitle{
+    display: flex;
+    justify-content: space-around;
+}
+
+.scores{
+    padding: 10px 0;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.titleBox{
+    /* background-color: white; */
+    padding: 5px 30px;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#titleBox1{
+    background-color: rgba(89, 0, 255, 0.6);
+}
+
+#titleBox2{
+    background-color: rgba(255,165,0,0.6);
+}
+
+.title{
+    text-align: center;
+    line-height: 20px;
+}
+
+#title1{
+    color: #e4fde0;
+}
+
+#title2{
+    color: #e4fde0;
+}
+
+.title,.date{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+footer {
+    padding-top: 3rem;    
+    text-align: center;
+    font-size: 0.875rem;
+    color: #666;
+    background-color: #e4fde0;
+
+}
+
+@media only screen and (max-width: 768px){
+    .scoreFormTitle{
+        font-size: 16px!important;
+        margin-bottom: 30px!important;
+    }
+    .date{
+        display: block;
+        font-size: 16px!important;
+    }
+}

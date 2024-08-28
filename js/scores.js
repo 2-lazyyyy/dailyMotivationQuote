@@ -1,14 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
+    $.getJSON('app/fetch_username.php', function(data) {
+        const $header = $('.msg');
+        
+
+        if (data.loggedIn) {
+            // User is logged in
+            $header.text(`Welcome, ${data.username}`);
+            
+        } else {
+            // User is not logged in
+            $header.text(`Please Log in`);
+            
+        }
+    });
     // Define the checkSession function before calling it
     const checkSession = async () => {
         try {
-            const response = await fetch('/api/check_session.php');
+            const response = await fetch('app/auth.php');
             if (!response.ok) throw new Error('Network response was not ok');
 
             const data = await response.json();
             
             if (data.status === 'expired') {
-                window.location.href = '/index.html';
+                window.location.href = 'index.html';
             }
         } catch (error) {
             console.error('Error checking session:', error);
@@ -21,9 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $('#logoutButton').off('click').on('click', function(e) {
         e.preventDefault(); // Prevent default link behavior
-        $.post('/app/logout.php', function(response) {
+        $.post('app/logout.php', function(response) {
             if (response === 'Logout successful') {
-                window.location.href = '/index.html';
+                window.location.href = 'index.html';
             }
         });
     });
@@ -35,12 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(this);
         const data = {
             happiness: formData.get('happiness'),
-            workload: formData.get('workload'),
+            workload_management: formData.get('workload_management'),
             anxiety: formData.get('anxiety')
         };
 
         try {
-            const response = await fetch('./api/dashboardApi.php', {
+            const response = await fetch('api/scoresApi.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -66,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Refresh the scores, chart, and advice
             fetchScores();
+            
         } catch (error) {
             console.error('Error:', error);
         }
@@ -74,10 +89,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to fetch scores and update the UI
     async function fetchScores() {
         try {
-            const response = await fetch('./api/dashboardApi.php');
+            const response = await fetch('api/scoresApi.php');
             if (!response.ok) throw new Error('Network response was not ok');
 
             const data = await response.json();
+            if(data.recent_score.happiness == null || data.recent_score.workload_management == null || data.recent_score.anxiety == null){
+                data.recent_score.happiness = 0;
+                data.recent_score.workload_management = 0;
+                data.recent_score.anxiety = 0;
+
+            }
 
             // Update the scores table
             const scoresTableBody = document.getElementById('scoresTable');
@@ -89,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="scores">
                         <h3 class="exp1 w-50">Workload Management</h3>
-                        <h3 class="exp2 w-50">${data.recent_score.workload}</h3>
+                        <h3 class="exp2 w-50">${data.recent_score.workload_management}</h3>
                     </div>
                     <div class="scores">
                         <h3 class="exp1 w-50">Anxiety</h3>
@@ -136,12 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = new google.visualization.DataTable();
             data.addColumn('string', 'Date');
             data.addColumn('number', 'Happiness');
-            data.addColumn('number', 'Workload');
+            data.addColumn('number', 'Workload_Management');
             data.addColumn('number', 'Anxiety');
 
             // Populate the data table with scores
             scores.forEach(score => {
-                data.addRow([score.date, parseFloat(score.happiness), parseFloat(score.workload), parseFloat(score.anxiety)]);
+                data.addRow([score.date, parseFloat(score.happiness), parseFloat(score.workload_management), parseFloat(score.anxiety)]);
             });
 
             const options = {
@@ -156,7 +177,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
             chart.draw(data, options);
 
-            $("rect").attr("fill", "#e4fde0");
+            $("rect").attr("fill", "none");
+            $("#curve_chart svg").css({"background":"transparent","backdrop-filter":"blur(30px)"});
+            $("#curve_chart g text").attr({"font-family":"raleway","fill":"#fff"});
+
         });
     }
 });

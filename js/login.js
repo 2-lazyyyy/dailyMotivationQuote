@@ -15,16 +15,19 @@ $(document).ready(() => {
         e.preventDefault();
         const formData = new FormData(this);
         $.ajax({
-            url: '/api/login.php',
+            url: 'api/login.php',
             method: 'POST',
             data: formData,
             processData: false,
             contentType: false,
             dataType: 'json',
             success: (data) => {
-                $('#loginStatus').text(data.message).css({'color':'red'});
+                
                 if (data.status === 'success') {
                     window.location.href = 'index.html';
+                    $('#loginStatus').text(data.message).css({'color':'green'});
+                } else {
+                    $('#loginStatus').text(data.message).css({'color':'red'});
                 }
             }
         });

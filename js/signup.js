@@ -31,7 +31,7 @@ $(document).ready(() => {
 
         const formData = new FormData(this);
 
-        fetch('/api/signup.php', {
+        fetch('api/signup.php', {
             method: 'POST',
             body: formData,
         })
@@ -39,10 +39,11 @@ $(document).ready(() => {
         .then(data => {
             $('#signupStatus').text(data.message).css('color', data.status === 'success' ? 'green' : 'red');
             if (data.status === 'success') {
-                window.location.href = '/login.html';
+                window.location.href = 'login.html';
+                
             }
         })
-        .catch(() => {
+        .catch(_ => {
             $('#signupStatus').text('An error occurred. Please try again.').css('color', 'red');
         });
     });

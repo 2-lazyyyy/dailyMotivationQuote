@@ -3,7 +3,8 @@
     width: 700px;
     height: 500px;
     padding: 24px;
-    background-color: #E4FDE0;
+    background: transparent;
+    backdrop-filter: blur(20px);
     border-radius: 24px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
 }
@@ -22,6 +23,7 @@
 .quotesvgdiv1 img,.quotesvgdiv2 img{
     width: 40px;
     height: 40px;
+    color: #000;
     
 }
 
@@ -29,11 +31,9 @@
     font-weight: 600;
     font-size: 24px;
     line-height: 34px!important;
-    color: #062105;
+    color: #e2f8e1fb;
     text-align: center;
-    /* text-shadow: 2px 2px 2px rgba(0,0,0,0.3); */
-    border-top: 2px solid #91CF8E;
-    border-bottom: 2px solid #91CF8E;
+   
     padding: 20px 0;
 }
 
@@ -42,29 +42,21 @@
     bottom: -150px;
     right: 20px;
     font-weight: 400;
-    font-size: 38px;
+    font-size: 28px;
     line-height: 34px!important;
-    color: #75c771;
+    color: #f5dd07;
     text-align: center;
-    font-family: "Jersey 10";
+    font-family: "Matemasie";
     font-style: normal;
     
 }
 
-.stick{
-    width: 15px;
-    height: 3px;
-    background-color: #75c771;
-    right: 12rem;
-    bottom: -120px;
-}
 
 .fa-chevron-down{
     position: absolute;
     font-size: 30px;
-    color: #4caa47;
+    color: #f5dd07;
     border-radius: 50%;
-    background-color: rgb(162, 238, 181);
     padding: 3px;
     cursor: pointer;
 }
@@ -79,16 +71,21 @@
     right: 20px;
 }
 
+.fa-chevron-down:hover{
+    background-color: #3f1681ea;
+    transition-duration: .5s;
+}
+
 @media only screen and (max-width: 1024px){
     .quotediv{
         width: 100%!important;
     }
 }
 
-@media only screen and (max-width: 361px){
+@media only screen and (max-width: 768px){
     #author{
         bottom: -80px;
-        font-size: 30px;
+        font-size: 25px;
     }
     #quote{
         font-size: 18px;

@@ -6,29 +6,27 @@
     <title>Home</title>
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Raleway font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <!-- Jersey 10 -->
+    <!-- Matemasie font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Matemasie&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <script src="js/quote.js" defer></script>
-    <link href="./css/styles.css" rel="stylesheet">
-    <link href="./css/quote.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/quote.css" rel="stylesheet">
     
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" role="navigation">
         <div class="container">
-            <a class="navbar-brand" href="#" aria-label="Home">&#127795;</a>
+            <a class="navbar-brand" href="index.html" aria-label="Home">&#127769;</a>
+            <span class="msg text-light"></span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,7 +36,7 @@
                   <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link dashboard" aria-current="page" href="#">Dashboard</a>
+                  <a class="nav-link scores" aria-current="page" href="#">Scores</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link login" href="" aria-current="page" >Login</a>
@@ -54,7 +52,7 @@
                     <label for="searchInput" class="visually-hidden">Search</label>
                     <input id="searchInput" class="form-control me-2" type="search" autocomplete="off" placeholder="Search" aria-label="Search">
                     <button class="btn" type="submit" style="border: none!important; outline:none!important;">
-                        <img style="opacity: 0.6" src="./img/SearchIcon.svg" alt="Search">
+                        <img style="opacity: 0.6" src="img/SearchIcon.svg" alt="Search">
                     </button>
                 </form>
             </div>
@@ -82,18 +80,16 @@
     </div>
 
     <main class="position-relative">
-        <div class="welcome">
-            <p class="msg">Welcome, </p>
-        </div>
+        
         <div class="container position-relative">
-            <div class="d-flex justify-content-between align-items-center insidecontainer">
-                <div class="d-flex justify-content-center align-items-start flex-column introDiv">
+            <div class="d-flex flex-column justify-content-between align-items-center insidecontainer">
+                <div class="d-flex justify-content-center align-items-center flex-column introDiv">
                     <p class="today">Today's Quote</p>
                     <p id="intro"></p>
                 </div>
                 <div class="quotediv position-relative d-flex align-items-center justify-content-center">
                   <div class="position-absolute quotesvgdiv1">
-                    <img src="./img/quote.svg" alt=""  />
+                    <img src="img/quote.svg" alt=""  />
                   </div>
                   <div class="position-relative">
                     <blockquote>
@@ -103,15 +99,23 @@
                     
                   </div>
                   <div class="position-absolute quotesvgdiv2">
-                    <img src="./img/quote.svg" alt=""  />
+                    <img src="img/quote.svg" alt=""  />
                   </div>
-                  <i class="fa-solid fa-chevron-down" id="prevQuote"></i>
-                  <i class="fa-solid fa-chevron-down" id="nextQuote"></i>
+                  <i class="fa-solid fa-chevron-down" id="prevQuote" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Previous"></i>
+                  <i class="fa-solid fa-chevron-down" id="nextQuote" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Next"></i>
                 </div>
             </div>
         </div>
     </main>
 
-    <script src="./js/home.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="js/home.js"></script>
+    <script src="js/quote.js" defer></script>
+
+  
 </body>
 </html>

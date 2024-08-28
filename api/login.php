@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     // Prepare the SQL statement using mysqli
-    $stmt = $mysqli->prepare("SELECT id, password FROM user WHERE username = ?");
+    $stmt = $mysqli->prepare("SELECT user_id, password FROM user WHERE username = ?");
     $stmt->bind_param('s', $username);
     $stmt->execute();
     $stmt->store_result();

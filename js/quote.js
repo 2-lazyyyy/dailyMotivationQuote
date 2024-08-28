@@ -14,7 +14,7 @@ $(document).ready(() => {
     const getDayOfYear = (date) => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / oneDay);
 
     const loadQuote = (index, dayOfYear, year) => {
-        fetch(`/app/get_quote.php?index=${index}`)
+        fetch(`app/get_quote.php?index=${index}`)
             .then(response => response.json())
             .then(data => {
                 quoteElement.text(data.quote);
@@ -94,7 +94,7 @@ $(document).ready(() => {
         const query = $('#searchInput').val().trim();
 
         if (query) {
-            fetch(`./../app/search_quotes.php?query=${encodeURIComponent(query)}`)
+            fetch(`app/search_quotes.php?query=${encodeURIComponent(query)}`)
                 .then(response => response.json())
                 .then(data => {
                     const resultList = $('#resultList');
