@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'wellbeing_db';
 $username = 'root';
-$password = 'root';
+$password = '';
 
 // Create connection
 $mysqli = new mysqli($host, $username, $password, $dbname);
