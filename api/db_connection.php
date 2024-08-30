@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'wellbeing_db';
+$dbname = 'hellowellbeing';
 $username = 'root';
 $password = '';
 
